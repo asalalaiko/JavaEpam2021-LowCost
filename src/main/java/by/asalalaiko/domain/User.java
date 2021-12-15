@@ -2,7 +2,7 @@ package by.asalalaiko.domain;
 
 import java.util.Date;
 
-public class Users {
+public class User {
     private Long id;
     private String login;
     private String password;
