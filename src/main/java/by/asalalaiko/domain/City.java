@@ -1,6 +1,8 @@
 package by.asalalaiko.domain;
 
-public class City {
+import by.asalalaiko.repo.WithId;
+
+public class City implements WithId {
 
     private Long id;
     private String name;

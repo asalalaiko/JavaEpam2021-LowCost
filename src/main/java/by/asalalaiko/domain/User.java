@@ -1,14 +1,18 @@
 package by.asalalaiko.domain;
 
-import java.util.Date;
+import by.asalalaiko.repo.WithId;
 
-public class User {
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
+public class User implements WithId {
     private Long id;
     private String login;
     private String password;
     private String firstName;
     private String lastName;
-    private Date created;
+    private LocalDateTime created;
     private Boolean locked;
     private String email;
     private UsersRole role;
@@ -53,11 +57,11 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Date getCreated() {
+    public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 

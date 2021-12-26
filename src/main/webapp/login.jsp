@@ -17,12 +17,19 @@
 
 <div class="container border-5" >
     <form action="/login">
-        <label for="login">Login:</label><br>
-        <input type="text" id="login" name="login"><br>
+        <div class="row justify-content-center  p-1">
+            <label for="login">Login:</label><br>
+            <input type="text" id="login" name="login"><br>
+        </div>
+        <div class="row justify-content-center  p-1">
+            <label for="pass">Password:</label> <br>
+            <input type="password" id="pass" name="pass"><br> <br>
+        </div>
+        <div class="row justify-content-center  p-1">
+            <input type="submit" value="Sign In">
+            <a class="link-secondary" href="/JavaEpam2021_LowCost_war/register.jsp">Register new user</a>
 
-        <label for="pass">Password:</label> <br>
-        <input type="password" id="pass" name="pass"><br> <br>
-        <input type="submit" value="Submit">
+        </div>
     </form>
 </div>
 <jsp:include page="blocks/footer.jsp" />

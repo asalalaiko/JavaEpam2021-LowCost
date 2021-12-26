@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
+import java.util.Map;
 
 public class AirportRepo extends AbstractCRUDRepository<Airport>{
 
@@ -71,6 +72,11 @@ public class AirportRepo extends AbstractCRUDRepository<Airport>{
                 }
             }
         }
+    }
+
+    @Override
+    protected Map<String, String> updateValues(Airport person) {
+        return null;
     }
 
     private void setValues(Airport airport, PreparedStatement ps) throws SQLException {

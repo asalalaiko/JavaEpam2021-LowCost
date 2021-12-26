@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info">
+
+    <Appenders>
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"/>
+        </Console>
+        <File name="file" fileName="app.log">
+            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Logger name="by.asalalaiko" level="debug" additivity="false">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="file"/>
+        </Root>
+        <Logger name="org.springframework.web.client" level="DEBUG" additivity="false">
+            <AppenderRef ref="APP" level="DEBUG"/>
+        </Logger>
+        <Logger name="org.apache.http.wire" level="DEBUG" additivity="false">
+            <AppenderRef ref="APP" level="DEBUG"/>
+        </Logger>
+    </Loggers>
+</Configuration>

@@ -1,8 +1,10 @@
 package by.asalalaiko.domain;
 
+import by.asalalaiko.repo.WithId;
+
 import java.math.BigDecimal;
 
-public class Airport {
+public class Airport implements WithId {
 
     private Long id;
     private String name;

@@ -4,25 +4,18 @@ import by.asalalaiko.domain.User;
 
 
 import by.asalalaiko.exception.EntityNotFoundException;
-import by.asalalaiko.exception.EntitySaveException;
 import by.asalalaiko.repo.jdbc.ConnectionPoolProvider;
 import by.asalalaiko.repo.mapping.UserMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.*;
+import java.util.Map;
 
 
 public class UserRepo extends AbstractCRUDRepository<User> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserRepo.class);
+   private static UserRepo instance;
 
-    private static UserRepo instance;
-
-    private static final String INSERT_STATEMENT = "INSERT INTO users (login, password, firstname, lastname, created_at, locked, email, role) VALUES (?, ?, ?, ?, ?, ?, ?)";
-    private static final String UPDATE_STATEMENT = "UPDATE users SET login = ?, password = ?, firstname = ? , lastname = ?, created_at = ?, locked = ?, email = ?, role = ? WHERE id = ?";
-
-    private UserRepo() {
+   private UserRepo() {
         super(new UserMapper(), "users");
         instance = this;
     }
@@ -34,46 +27,21 @@ public class UserRepo extends AbstractCRUDRepository<User> {
         return instance;
     }
 
-    public User save(User user) {
-        PreparedStatement ps = null;
-        try (Connection connection = ConnectionPoolProvider.getConnection();) {
+    protected Map<String, String> updateValues(User user) {
 
-            if (user.getId() == null) {
-                ps = connection.prepareStatement(INSERT_STATEMENT, Statement.RETURN_GENERATED_KEYS);
-            } else {
-                ps = connection.prepareStatement(UPDATE_STATEMENT, Statement.RETURN_GENERATED_KEYS);
-            }
+        return Map.of(
+                "login", "'" + user.getLogin() + "'",
+                "password", "'" + user.getPassword() + "'",
+                "firstName", "'" + user.getFirstName() + "'",
+                "lastName", "'" + user.getLastName() + "'",
+                "created_at", "'" + Timestamp.valueOf(user.getCreated()).toString() + "'",
+                "locked", "'" + user.getLocked() + "'",
+                "email", "'" + user.getEmail() +"'",
+                "role", "" + String.valueOf(user.getRole().ordinal())
+        );
 
-            setValues(user, ps);
 
-            if (user.getId() != null) {
-                ps.setLong(8, user.getId());
-            }
 
-            if (ps.executeUpdate() != 1) {
-                throw new EntitySaveException("Something went wrong");
-            }
-
-            ResultSet generatedKeys = ps.getGeneratedKeys();
-
-            if (generatedKeys.next()) {
-                user.setId(generatedKeys.getLong(1));
-            }
-
-            return user;
-
-        } catch (SQLException e) {
-            LOGGER.error("Something whent wrong during users retrieval", e);
-            throw new EntitySaveException(e);
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                    throw new EntitySaveException(e);
-                }
-            }
-        }
     }
 
     public User findByLogin(String login) {
@@ -96,16 +64,4 @@ public class UserRepo extends AbstractCRUDRepository<User> {
             throw new EntityNotFoundException(e);
         }
     }
-
-    private void setValues(User user, PreparedStatement ps) throws SQLException {
-        ps.setString(1, user.getLogin());
-        ps.setString(2, user.getPassword());
-        ps.setString(3, user.getFirstName());
-        ps.setString(4, user.getLastName());
-        ps.setDate(5, (java.sql.Date) user.getCreated());
-        ps.setBoolean(6, user.getLocked());
-        ps.setString(7, user.getEmail());
-        ps.setInt(8, user.getRole().ordinal());
-    }
-
 }

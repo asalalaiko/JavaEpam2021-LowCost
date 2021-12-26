@@ -1,35 +1,38 @@
 package by.asalalaiko.repo;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 import by.asalalaiko.exception.EntityDeleteException;
 import by.asalalaiko.exception.EntityNotFoundException;
 import by.asalalaiko.exception.EntityRetrieveException;
+import by.asalalaiko.exception.EntitySaveException;
 import by.asalalaiko.repo.jdbc.ConnectionPoolProvider;
 import by.asalalaiko.repo.mapping.RowMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public abstract class AbstractCRUDRepository<T> {
-
+public abstract class AbstractCRUDRepository<T extends WithId> {
 	public static final Logger LOGGER = LoggerFactory.getLogger(AbstractCRUDRepository.class);
 	public static final String SELECT_STATEMENT = "SELECT * FROM %s";
 	public static final String DELETE_STATEMENT = "DELETE FROM %s WHERE id = %d";
 	public static final String SELECT_BY_ID_SQL = SELECT_STATEMENT + " WHERE id = %d";
 	public static final String ORDERED_PAGINATED = SELECT_STATEMENT + " ORDER BY %s LIMIT %d OFFSET %d";
 
-	private RowMapper<T> rm;
-	private String tableName;
+	public static final String INSERT_STATEMENT = "INSERT INTO %s (%s) VALUES (%s)";
+	public static final String UPDATE_STATEMENT = "UPDATE %s SET %s WHERE id = %s";
 
-	public AbstractCRUDRepository(RowMapper<T> rm, String tableName) {
+	protected RowMapper<T> rm;
+	protected String tableName;
+
+	public AbstractCRUDRepository(RowMapper<T> rs, String tableName) {
 		super();
-		this.rm = rm;
+		this.rm = rs;
 		this.tableName = tableName;
 	}
 
@@ -111,10 +114,84 @@ public abstract class AbstractCRUDRepository<T> {
 		}
 	}
 
+	protected void update(Long id, Map<String, String> toSet) {
+		PreparedStatement ps = null;
+		try (Connection connection = ConnectionPoolProvider.getConnection()) {
+
+			String pairs = toSet.entrySet().stream().map(entry -> entry.getKey() + "=" + entry.getValue())
+					.collect(Collectors.joining(","));
+
+			ps = connection.prepareStatement(String.format(UPDATE_STATEMENT, tableName, pairs, id));
+
+			if (ps.executeUpdate() != 1) {
+				throw new EntitySaveException("Something went wrong");
+			}
+
+		} catch (SQLException e) {
+			LOGGER.error("Something whent wrong during data saving", e);
+			throw new EntitySaveException(e);
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					throw new EntitySaveException(e);
+				}
+			}
+		}
+	}
+
+	protected Long create(Map<String, String> toSet) {
+
+		PreparedStatement ps = null;
+		try (Connection connection = ConnectionPoolProvider.getConnection();) {
+
+			String csvColumns = toSet.entrySet().stream().map(e -> e.getKey()).collect(Collectors.joining(","));
+			String csvValues = toSet.entrySet().stream().map(e -> e.getValue()).collect(Collectors.joining(","));
+
+			ps = connection.prepareStatement(String.format(INSERT_STATEMENT, tableName, csvColumns, csvValues),
+					Statement.RETURN_GENERATED_KEYS);
+
+			if (ps.executeUpdate() != 1) {
+				throw new EntitySaveException("Something went wrong");
+			}
+
+			ResultSet generatedKeys = ps.getGeneratedKeys();
+
+			if (generatedKeys.next()) {
+				return generatedKeys.getLong(1);
+			} else {
+				throw new EntitySaveException("Something went wrong");
+			}
+		} catch (SQLException e) {
+			LOGGER.error("Something whent wrong during data saving retrieval", e);
+			throw new EntitySaveException(e);
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					throw new EntitySaveException(e);
+				}
+			}
+		}
+
+	}
+
+	public T save(T user) {
+		if (user.getId() == null) {
+			Long create = create(updateValues(user));
+			user.setId(create);
+			return user;
+		} else {
+			update(user.getId(), updateValues(user));
+			return user;
+		}
+	}
+
 	public RowMapper<T> getRm() {
 		return rm;
 	}
 
-
-
+	protected abstract Map<String, String> updateValues(T person);
 }
