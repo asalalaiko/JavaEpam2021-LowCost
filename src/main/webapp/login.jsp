@@ -16,14 +16,14 @@
 <jsp:include page="blocks/navbar.jsp" />
 
 <div class="container border-5" >
-    <form action="/login">
+    <form action="/JavaEpam2021_LowCost_war/login">
         <div class="row justify-content-center  p-1">
             <label for="login">Login:</label><br>
             <input type="text" id="login" name="login"><br>
         </div>
         <div class="row justify-content-center  p-1">
-            <label for="pass">Password:</label> <br>
-            <input type="password" id="pass" name="pass"><br> <br>
+            <label for="password">Password:</label> <br>
+            <input type="password" id="password" name="password"><br> <br>
         </div>
         <div class="row justify-content-center  p-1">
             <input type="submit" value="Sign In">

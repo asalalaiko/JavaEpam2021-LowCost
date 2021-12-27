@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Alex
-  Date: 13.12.2021
-  Time: 10:18
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
@@ -26,10 +20,13 @@
                 <a class="nav-link disabled" href="#">Disabled</a>
             </li>
         </ul>
-
-
+        <c:if test="${sessionScope.user ne null}">
+            <div class="nav-item">Hello ${sessionScope.user.login}!</div>
+            <a class="nav-link my-2 my-sm-0 " href="<c:url value = "/logout"/>">Logout</a>
+        </c:if>
+        <c:if test="${sessionScope.user eq null}">
             <a class="nav-link my-2 my-sm-0 " href="/JavaEpam2021_LowCost_war/login.jsp">Login</a>
-
+        </c:if>
     </div>
 </nav>
 </header>

@@ -2,6 +2,7 @@ package by.asalalaiko.service;
 
 import by.asalalaiko.domain.User;
 import by.asalalaiko.domain.UsersRole;
+import by.asalalaiko.exception.UserNotFoundForLoginException;
 import by.asalalaiko.repo.UserRepo;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
@@ -55,6 +56,19 @@ public class UserService {
 //            LOGGER.error("MEssage sending failed", e);
 //        }
         return save;
+    }
+
+
+    public User login(String login, String password) {
+        User findByLogin = UserRepo.getInstance().findByLogin(login);
+        if (findByLogin != null) {
+            String hashInDB = findByLogin.getPassword();
+            String hashPassword = hashPassword(password);
+            if (hashInDB.equals(hashPassword)) {
+                return findByLogin;
+            }
+        }
+        throw new UserNotFoundForLoginException(login);
     }
 
     private String hashPassword(String password) {
