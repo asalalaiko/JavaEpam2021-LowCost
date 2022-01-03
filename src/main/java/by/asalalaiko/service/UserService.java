@@ -34,7 +34,6 @@ public class UserService {
                              String email) {
 
         String hashPassword = hashPassword(password);
-        Date date = new Date();
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         User user = new User();

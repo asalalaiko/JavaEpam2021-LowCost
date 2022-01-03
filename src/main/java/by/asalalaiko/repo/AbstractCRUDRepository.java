@@ -193,5 +193,5 @@ public abstract class AbstractCRUDRepository<T extends WithId> {
 		return rm;
 	}
 
-	protected abstract Map<String, String> updateValues(T person);
+	protected abstract Map<String, String> updateValues(T user);
 }
