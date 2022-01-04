@@ -33,14 +33,14 @@ public class CityServise {
         CityRepo.getInstance().deleteById(cityId);
     }
 
-    public City createProduct(String name) {
+    public City create(String name) {
         City city = new City();
         city.setName(name);
         CityRepo.getInstance().save(city);
         return city;
     }
 
-    public City updateProduct(Long id, String name) {
+    public City update(Long id, String name) {
         City city = new City();
         city.setId(id);
         city.setName(name);

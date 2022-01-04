@@ -19,10 +19,10 @@ public class CityAddServlet extends HttpServlet {
         String id = req.getParameter("id");
         String name = req.getParameter("name");
         if (id == null) {
-            City city = CityServise.getInstance().createProduct(name);
+            City city = CityServise.getInstance().create(name);
             req.setAttribute("createdCity", city);
         } else {
-            City city = CityServise.getInstance().updateProduct(Long.valueOf(id), name);
+            City city = CityServise.getInstance().update(Long.valueOf(id), name);
             req.setAttribute("updatedCity", city);
         }
 

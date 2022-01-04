@@ -1,5 +1,6 @@
 package by.asalalaiko.repo;
 
+import by.asalalaiko.domain.City;
 import by.asalalaiko.domain.User;
 import by.asalalaiko.domain.UsersRole;
 import by.asalalaiko.repo.jdbc.ConnectionPoolProvider;
@@ -16,7 +17,7 @@ import java.sql.Timestamp;
 
 import static org.junit.Assert.assertEquals;
 
-public class UserRepoTest {
+public class CityRepoTest {
 
     @Before
     public void init() throws SQLException, IOException {
@@ -33,27 +34,21 @@ public class UserRepoTest {
 
     @Test
     public void testPersonRepoInsertGet(){
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-        User user = new User();
-        user.setEmail("user@gmail.com");
-        user.setFirstName("Admin");
-        user.setLastName("Adminov");
-        user.setLocked(Boolean.FALSE);
-        user.setCreated(timestamp.toLocalDateTime());
-        user.setLogin("admin");
-        user.setPassword("admin");
-        user.setRole(UsersRole.ADMIN);
+        City city = new City();
+        city.setName("NY");
 
-        UserRepo.getInstance().save(user);
+        CityRepo.getInstance().save(city);
 
-        assertEquals(user.getLogin(), "admin");
+        assertEquals(city.getName(), "NY");
 
-        user.setLogin("user");
-        UserRepo.getInstance().save(user);
+        city.setName("Moscow");
+        CityRepo.getInstance().save(city);
 
-        assertEquals(user.getLogin(), "user");
+        assertEquals(city.getName(), "Moscow");
 
+        CityRepo.getInstance().deleteById(city.getId());
+        assertEquals(CityRepo.getInstance().findAll().size(), 0);
 
     }
 
