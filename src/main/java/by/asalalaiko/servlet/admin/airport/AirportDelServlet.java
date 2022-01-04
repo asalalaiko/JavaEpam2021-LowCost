@@ -1,6 +1,6 @@
-package by.asalalaiko.servlet.admin;
+package by.asalalaiko.servlet.admin.airport;
 
-import by.asalalaiko.repo.UserRepo;
+import by.asalalaiko.service.AirportService;
 import by.asalalaiko.service.CityService;
 
 import javax.servlet.ServletException;
@@ -10,25 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-@WebServlet(value = "/admin/city/del", name = "cityDeleteAdmin")
-public class CityDelServlet extends HttpServlet {
+@WebServlet(value = "/admin/airport/del", name = "airportDeleteAdmin")
+public class AirportDelServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String parameter = req.getParameter("id");
 
-        Long cityId = Long.valueOf(parameter);
+        Long airportId = Long.valueOf(parameter);
         try {
 
-            CityService.deleteById(cityId);
+            AirportService.deleteById(airportId);
 
-            req.getRequestDispatcher("/admin/city").forward(req, resp);
+            req.getRequestDispatcher("/admin/airport").forward(req, resp);
 
         } catch (Exception e) {
             throw new IOException(e);
         }
 
     }
-}
 
+}

@@ -15,7 +15,7 @@ public class AirportMapper implements RowMapper<Airport>{
         airport.setId(rs.getLong("id"));
         airport.setName(rs.getString("name"));
         airport.setTax(rs.getBigDecimal("tax"));
-        long ordinal = rs.getLong("city");
+        long ordinal = rs.getLong("city_id");
         airport.setCity(CityRepo.getInstance().getById(ordinal));
 
         return airport;

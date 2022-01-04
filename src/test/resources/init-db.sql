@@ -36,7 +36,7 @@ CREATE TABLE "airport" (
                            "name" varchar,
                            "code" varchar,
                            "tax" decimal(15,2),
-                           "city" int
+                           "city_id" int
 );
 
 CREATE TABLE "city" (
@@ -59,7 +59,7 @@ ALTER TABLE "flight" ADD FOREIGN KEY ("airport_end_id") REFERENCES "airport" ("i
 
 ALTER TABLE "flight" ADD FOREIGN KEY ("plaine_id") REFERENCES "plaine" ("id");
 
-ALTER TABLE "airport" ADD FOREIGN KEY ("city") REFERENCES "city" ("id");
+ALTER TABLE "airport" ADD FOREIGN KEY ("city_id") REFERENCES "city" ("id");
 
 ALTER TABLE "ticet" ADD FOREIGN KEY ("flight_id") REFERENCES "flight" ("id");
 

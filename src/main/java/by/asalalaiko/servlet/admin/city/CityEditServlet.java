@@ -1,4 +1,4 @@
-package by.asalalaiko.servlet.admin;
+package by.asalalaiko.servlet.admin.city;
 
 
 import by.asalalaiko.domain.City;

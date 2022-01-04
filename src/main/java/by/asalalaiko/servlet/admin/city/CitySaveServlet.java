@@ -1,4 +1,4 @@
-package by.asalalaiko.servlet.admin;
+package by.asalalaiko.servlet.admin.city;
 
 import by.asalalaiko.domain.City;
 import by.asalalaiko.service.CityService;
@@ -11,14 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(value = "/admin/city/save", name = "citySaveAdmin")
-public class CityAddServlet extends HttpServlet {
+public class CitySaveServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String id = req.getParameter("id");
         String name = req.getParameter("name");
-        if (id == null) {
+        if (id == "") {
             City city = CityService.getInstance().create(name);
             req.setAttribute("createdCity", city);
         } else {
