@@ -1,8 +1,7 @@
 package by.asalalaiko.repo;
 
+import by.asalalaiko.domain.Airport;
 import by.asalalaiko.domain.City;
-import by.asalalaiko.domain.User;
-import by.asalalaiko.domain.UsersRole;
 import by.asalalaiko.repo.jdbc.ConnectionPoolProvider;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
@@ -10,14 +9,14 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 
 import static org.junit.Assert.assertEquals;
 
-public class CityRepoTest {
+public class AirportRepoTest {
 
     @Before
     public void init() throws SQLException, IOException {
@@ -33,22 +32,29 @@ public class CityRepoTest {
     }
 
     @Test
-    public void testCityRepoInsertGet(){
+    public void testAirportRepoInsertGet(){
 
         City city = new City();
         city.setName("NY");
-
         CityRepo.getInstance().save(city);
 
-        assertEquals(city.getName(), "NY");
+        Airport airport = new Airport();
+        airport.setName("JFK International Airport");
+        airport.setTax(BigDecimal.valueOf(1500.00));
+        airport.setCity(city);
+        AirportRepo.getInstance().save(airport);
 
-        city.setName("Moscow");
-        CityRepo.getInstance().save(city);
+        assertEquals(airport.getName(), "JFK International Airport");
+        assertEquals(airport.getCity().getName(), "NY");
 
-        assertEquals(city.getName(), "Moscow");
+        airport.setTax(BigDecimal.valueOf(10.00));
+        AirportRepo.getInstance().save(airport);
 
-        CityRepo.getInstance().deleteById(city.getId());
-        assertEquals(CityRepo.getInstance().findAll().size(), 0);
+        assertEquals(airport.getTax(), BigDecimal.valueOf(10.00));
+
+
+        AirportRepo.getInstance().deleteById(airport.getId());
+        assertEquals(AirportRepo.getInstance().findAll().size(), 0);
 
     }
 

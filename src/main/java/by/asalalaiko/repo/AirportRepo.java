@@ -17,7 +17,7 @@ public class AirportRepo extends AbstractCRUDRepository<Airport>{
     private static AirportRepo instance;
 
     private static final String INSERT_STATEMENT = "INSERT INTO airport (name, tax, city) VALUES (?,?,?)";
-    private static final String UPDATE_STATEMENT = "UPDATE city SET name = ?, tax=?, city=? WHERE id = ?";
+    private static final String UPDATE_STATEMENT = "UPDATE airport SET name = ?, tax=?, city=? WHERE id = ?";
 
 
     public AirportRepo() {
