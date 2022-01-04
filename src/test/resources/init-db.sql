@@ -13,7 +13,7 @@ CREATE TABLE users (
 
 
 
-CREATE TABLE "plaine" (
+CREATE TABLE "plane" (
                           "id" SERIAL PRIMARY KEY,
                           "name" varchar,
                           "model" varchar,
@@ -23,12 +23,12 @@ CREATE TABLE "plaine" (
 
 CREATE TABLE "flight" (
                           "id" SERIAL PRIMARY KEY,
-                          "startdate" timestamp,
-                          "enddate" timestamp,
+                          "start_date" timestamp,
+                          "end_date" timestamp,
                           "km" int,
                           "airport_start_id" int,
                           "airport_end_id" int,
-                          "plaine_id" int
+                          "plane_id" int
 );
 
 CREATE TABLE "airport" (
@@ -44,7 +44,7 @@ CREATE TABLE "city" (
                         "name" varchar
 );
 
-CREATE TABLE "ticet" (
+CREATE TABLE "ticket" (
                          "id" SERIAL PRIMARY KEY,
                          "created_at" timestamp,
                          "baggage" boolean,
@@ -57,10 +57,10 @@ ALTER TABLE "flight" ADD FOREIGN KEY ("airport_start_id") REFERENCES "airport" (
 
 ALTER TABLE "flight" ADD FOREIGN KEY ("airport_end_id") REFERENCES "airport" ("id");
 
-ALTER TABLE "flight" ADD FOREIGN KEY ("plaine_id") REFERENCES "plaine" ("id");
+ALTER TABLE "flight" ADD FOREIGN KEY ("plane_id") REFERENCES "plane" ("id");
 
 ALTER TABLE "airport" ADD FOREIGN KEY ("city_id") REFERENCES "city" ("id");
 
-ALTER TABLE "ticet" ADD FOREIGN KEY ("flight_id") REFERENCES "flight" ("id");
+ALTER TABLE "ticket" ADD FOREIGN KEY ("flight_id") REFERENCES "flight" ("id");
 
-ALTER TABLE "ticet" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");
+ALTER TABLE "ticket" ADD FOREIGN KEY ("user_id") REFERENCES "users" ("id");

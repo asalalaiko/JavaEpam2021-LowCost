@@ -61,7 +61,7 @@ public class AirportRepo extends AbstractCRUDRepository<Airport>{
             return airport;
 
         } catch (SQLException e) {
-            LOGGER.error("Something whent wrong during users retrieval", e);
+            LOGGER.error("Something whent wrong during airports retrieval", e);
             throw new EntitySaveException(e);
         } finally {
             if (ps != null) {
@@ -75,7 +75,7 @@ public class AirportRepo extends AbstractCRUDRepository<Airport>{
     }
 
     @Override
-    protected Map<String, String> updateValues(Airport person) {
+    protected Map<String, String> updateValues(Airport airport) {
         return null;
     }
 
