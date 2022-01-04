@@ -26,6 +26,6 @@ public class CityAddServlet extends HttpServlet {
             req.setAttribute("updatedCity", city);
         }
 
-        req.getRequestDispatcher("cityListAdmin").forward(req, resp);
+        req.getRequestDispatcher("/admin/city").forward(req, resp);
     }
 }

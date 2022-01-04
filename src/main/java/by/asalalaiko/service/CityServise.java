@@ -47,4 +47,8 @@ public class CityServise {
         CityRepo.getInstance().save(city);
         return city;
     }
+
+    public City getById(Long id){
+        return CityRepo.getInstance().getById(id);
+    }
 }

@@ -23,7 +23,7 @@ public class CityDelServlet extends HttpServlet {
 
             CityServise.deleteById(cityId);
 
-            req.getRequestDispatcher("cityListAdmin").forward(req, resp);
+            req.getRequestDispatcher("/admin/city").forward(req, resp);
 
         } catch (Exception e) {
             throw new IOException(e);

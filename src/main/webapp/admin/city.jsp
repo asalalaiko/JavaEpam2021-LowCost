@@ -9,14 +9,15 @@
 <jsp:include page="/blocks/navbar.jsp" />
     <div class="container border-5" >
 
-        <form class="main_form " action="/admin/city/save">
+        <form class="main_form " action="/JavaEpam2021_LowCost_war/admin/city/save">
             <div class="row">
                 <div class="col-md-12 ">
+                    <input type="hidden" name="id" value="${city.id}">
                     <input class="form_contril" placeholder="name " type="text"
-                           name="name" >
+                           name="name" value="${city.name}">
                 </div>
                 <div class="col-sm-12">
-                    <input class="send_btn" type="submit" value="Create">
+                    <input class="send_btn" type="submit" value="Save">
                 </div>
             </div>
         </form>
