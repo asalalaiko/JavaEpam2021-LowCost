@@ -8,20 +8,20 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
 
-public class CityServise {
+public class CityService {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(CityServise.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(CityService.class);
 
-    private static CityServise instance;
+    private static CityService instance;
 
-    private CityServise() {
+    private CityService() {
 
         instance = this;
     }
 
-    public static CityServise getInstance() {
+    public static CityService getInstance() {
         if (instance == null) {
-            CityServise.instance = new CityServise();
+            CityService.instance = new CityService();
         }
         return instance;
     }

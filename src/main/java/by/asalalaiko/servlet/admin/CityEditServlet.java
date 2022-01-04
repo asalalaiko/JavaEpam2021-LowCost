@@ -2,7 +2,7 @@ package by.asalalaiko.servlet.admin;
 
 
 import by.asalalaiko.domain.City;
-import by.asalalaiko.service.CityServise;
+import by.asalalaiko.service.CityService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,11 +20,11 @@ public class CityEditServlet extends HttpServlet {
 
         String id = req.getParameter("id");
 
-        City city = CityServise.getInstance().getById(Long.valueOf(id));
+        City city = CityService.getInstance().getById(Long.valueOf(id));
 
         req.setAttribute("city", city);
 
-        Collection<City> all = CityServise.findAll();
+        Collection<City> all = CityService.findAll();
 
         req.setAttribute("cities", all);
 

@@ -1,7 +1,7 @@
 package by.asalalaiko.servlet.admin;
 
 import by.asalalaiko.repo.UserRepo;
-import by.asalalaiko.service.CityServise;
+import by.asalalaiko.service.CityService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +21,7 @@ public class CityDelServlet extends HttpServlet {
         Long cityId = Long.valueOf(parameter);
         try {
 
-            CityServise.deleteById(cityId);
+            CityService.deleteById(cityId);
 
             req.getRequestDispatcher("/admin/city").forward(req, resp);
 

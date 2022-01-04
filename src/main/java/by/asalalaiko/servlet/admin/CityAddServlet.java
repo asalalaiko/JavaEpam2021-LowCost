@@ -1,7 +1,7 @@
 package by.asalalaiko.servlet.admin;
 
 import by.asalalaiko.domain.City;
-import by.asalalaiko.service.CityServise;
+import by.asalalaiko.service.CityService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,10 +19,10 @@ public class CityAddServlet extends HttpServlet {
         String id = req.getParameter("id");
         String name = req.getParameter("name");
         if (id == null) {
-            City city = CityServise.getInstance().create(name);
+            City city = CityService.getInstance().create(name);
             req.setAttribute("createdCity", city);
         } else {
-            City city = CityServise.getInstance().update(Long.valueOf(id), name);
+            City city = CityService.getInstance().update(Long.valueOf(id), name);
             req.setAttribute("updatedCity", city);
         }
 

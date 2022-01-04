@@ -4,7 +4,7 @@ import by.asalalaiko.domain.City;
 import by.asalalaiko.domain.User;
 import by.asalalaiko.repo.CityRepo;
 import by.asalalaiko.repo.UserRepo;
-import by.asalalaiko.service.CityServise;
+import by.asalalaiko.service.CityService;
 import by.asalalaiko.service.UserService;
 
 import javax.servlet.ServletException;
@@ -22,7 +22,7 @@ public class CityListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
 
-            Collection<City> all = CityServise.findAll();
+            Collection<City> all = CityService.findAll();
 
             req.setAttribute("cities", all);
 
