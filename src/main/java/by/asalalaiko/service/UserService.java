@@ -1,8 +1,10 @@
 package by.asalalaiko.service;
 
+import by.asalalaiko.domain.Plane;
 import by.asalalaiko.domain.User;
 import by.asalalaiko.domain.UsersRole;
 import by.asalalaiko.exception.UserNotFoundForLoginException;
+import by.asalalaiko.repo.PlaneRepo;
 import by.asalalaiko.repo.UserRepo;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
@@ -10,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.Date;
 
 public class UserService {
@@ -30,6 +33,16 @@ public class UserService {
         return instance;
     }
 
+    public static Collection<User> findAll() {return UserRepo.getInstance().findAll();
+    }
+
+    public static void lockUnlockById(Long id) {
+        User user = new User();
+        user = UserRepo.getInstance().getById(id);
+        user.setLocked(!user.getLocked());
+        UserRepo.getInstance().save(user);
+    }
+
     public User registerUser(String login, String password, String firstName, String lastName,
                              String email) {
 
@@ -44,7 +57,7 @@ public class UserService {
         user.setLastName(lastName);
         user.setEmail(email);
         user.setCreated(timestamp.toLocalDateTime());
-        user.setLocked(Boolean.FALSE);
+        user.setLocked(Boolean.TRUE); // TRUE - USER LOCKED
         user.setRole(UsersRole.USER);
 
         User save = UserRepo.getInstance().save(user);

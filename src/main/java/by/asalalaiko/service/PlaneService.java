@@ -35,6 +35,8 @@ public class PlaneService {
         PlaneRepo.getInstance().deleteById(id);
     }
 
+
+
     public Plane create(String name, String model, Integer seats, BigDecimal costKM) {
         Plane plane = new Plane();
         plane.setName(name);
