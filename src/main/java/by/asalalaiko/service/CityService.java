@@ -1,7 +1,6 @@
 package by.asalalaiko.service;
 
 import by.asalalaiko.domain.City;
-import by.asalalaiko.domain.User;
 import by.asalalaiko.repo.CityRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
