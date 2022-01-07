@@ -28,7 +28,8 @@ CREATE TABLE "flight" (
                           "km" int,
                           "airport_start_id" int,
                           "airport_end_id" int,
-                          "plane_id" int
+                          "plane_id" int,
+                          "cost"  decimal(15,2)
 );
 
 CREATE TABLE "airport" (
