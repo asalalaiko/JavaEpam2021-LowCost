@@ -19,7 +19,7 @@
                     <option value="none" selected disabled hidden>Select an Airport</option>
                     <c:forEach items="${airports}" var="airport">
                         <option value=${airport.id}
-                                <c:if test="${flight.startAirport.id == startAirport.id}"> selected="selected"</c:if>
+                                <c:if test="${flight.startAirport.id == airport.id}"> selected="selected"</c:if>
                         >${airport.name}
                         </option>
                     </c:forEach>
@@ -30,7 +30,7 @@
                     <option value="none" selected disabled hidden>Select an Airport</option>
                     <c:forEach items="${airports}" var="airport">
                         <option value=${airport.id}
-                                <c:if test="${flight.finishAirport.id == finishAirport.id}"> selected="selected"</c:if>
+                                <c:if test="${flight.finishAirport.id == airport.id}"> selected="selected"</c:if>
                         >${airport.name}
                         </option>
                     </c:forEach>
