@@ -34,6 +34,9 @@ public class FlightService {
 
     public static Collection<Flight> findAll() {return FlightRepo.getInstance().findAll();    }
 
+    public static void deleteById(Long id) { FlightRepo.getInstance().deleteById(id);
+    }
+
     public Flight getById(Long id){
         return FlightRepo.getInstance().getById(id);
     }

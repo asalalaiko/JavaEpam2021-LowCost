@@ -20,7 +20,7 @@ public class FlightRepo extends AbstractCRUDRepository<Flight>{
     private static FlightRepo instance;
 
     private static final String INSERT_STATEMENT = "INSERT INTO flight (start_date, end_date, km, airport_start_id, airport_end_id, plane_id, cost) VALUES (?,?,?,?,?,?,?)";
-    private static final String UPDATE_STATEMENT = "UPDATE flight SET start_date = ?, end_date=?, km=?, airport_start_id=?, airport_end_id=?, plane_id=?, cost=?,WHERE id = ?";
+    private static final String UPDATE_STATEMENT = "UPDATE flight SET start_date = ?, end_date=?, km=?, airport_start_id=?, airport_end_id=?, plane_id=?, cost=? WHERE id = ?";
 
 
     public FlightRepo() {
