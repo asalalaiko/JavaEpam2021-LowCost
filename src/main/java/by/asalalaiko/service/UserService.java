@@ -21,6 +21,7 @@ public class UserService {
 
     private static UserService instance;
 
+
     private UserService() {
 
         instance = this;
@@ -41,6 +42,10 @@ public class UserService {
         user = UserRepo.getInstance().getById(id);
         user.setLocked(!user.getLocked());
         UserRepo.getInstance().save(user);
+    }
+
+    public User findByLogin(String login){
+        return UserRepo.getInstance().findByLogin(login);
     }
 
     public User registerUser(String login, String password, String firstName, String lastName,
