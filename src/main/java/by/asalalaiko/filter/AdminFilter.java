@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter("/user/*")
-public class UserFilter implements Filter {
+@WebFilter("/admin/*")
+public class AdminFilter implements Filter {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(UserFilter.class);
 
@@ -30,15 +30,15 @@ public class UserFilter implements Filter {
             HttpSession session = req.getSession(false);
             if ( session!= null) { user = (User) session.getAttribute("user");}
 
-        boolean loggedIn = session != null && user.getRole() == UsersRole.USER;
+            boolean loggedIn = session != null && user.getRole() == UsersRole.ADMIN;
 
-        if(loggedIn) {
-            chain.doFilter(req, res);
-        }
+            if(loggedIn) {
+                chain.doFilter(req, res);
+            }
 
-        else {
-            res.sendRedirect("/JavaEpam2021_LowCost_war/login.jsp");
-        }
+            else {
+                res.sendRedirect("/JavaEpam2021_LowCost_war/login.jsp");
+            }
         } catch (UnauthorizedException e) {
             LOGGER.error("Operation cannot be performed for unauthorized user", e);
             ((HttpServletResponse) response)

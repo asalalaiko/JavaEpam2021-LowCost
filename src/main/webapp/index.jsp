@@ -21,6 +21,9 @@
 
         <div class="container border-5" >
             <h1>Добро пожаловать!</h1>
+
+            ${pageContext.request.contextPath}<br>
+            ${sessionScope.user.role}
         </div>
 
 

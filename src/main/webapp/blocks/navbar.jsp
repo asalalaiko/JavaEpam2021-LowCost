@@ -8,31 +8,22 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <a class="navbar-brand" href="#">Lowcost Company</a>
+        <a class="navbar-brand" href="${pageContext.request.contextPath}">Lowcost Company</a>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin</a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/admin/city/">City</a>
-                    <a class="dropdown-item" href="#">----------------------</a>
-                    <a class="dropdown-item" href="#">----------------------</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">----------------------</a>
-                </div>
-            </li>
+
         </ul>
         <c:if test="${sessionScope.user ne null}">
             <div class="nav-item">Hello ${sessionScope.user.login}!</div>
+            <c:if test="${sessionScope.user.role == 'ADMIN'}">
+                <a class="nav-link my-2 my-sm-0 "  href="${pageContext.request.contextPath}/admin/profile.jsp">Profile</a>
+            </c:if>
+            <c:if test="${sessionScope.user.role == 'USER'}">
+                <a class="nav-link my-2 my-sm-0 "  href="${pageContext.request.contextPath}/user/profile.jsp">Profile</a>
+            </c:if>
             <a class="nav-link my-2 my-sm-0 " href="<c:url value = "/logout"/>">Logout</a>
         </c:if>
         <c:if test="${sessionScope.user eq null}">
-            <a class="nav-link my-2 my-sm-0 " href="/JavaEpam2021_LowCost_war/login.jsp">Login</a>
+            <a class="nav-link my-2 my-sm-0 " href="${pageContext.request.contextPath}/login.jsp">Login</a>
         </c:if>
     </div>
 </nav>
