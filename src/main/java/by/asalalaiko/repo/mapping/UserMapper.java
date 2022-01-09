@@ -22,6 +22,7 @@ public class UserMapper implements RowMapper<User>{
         user.setEmail(rs.getString("email"));
         int ordinal = rs.getInt("role");
         user.setRole(UsersRole.getByOrdinal(ordinal));
+        user.setActive(rs.getBoolean("active"));
 
         return user;
     }

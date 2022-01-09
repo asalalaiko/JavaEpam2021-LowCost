@@ -16,6 +16,7 @@ public class User implements WithId {
     private Boolean locked;
     private String email;
     private UsersRole role;
+    private Boolean active;
 
     public Long getId() {
         return id;
@@ -87,5 +88,13 @@ public class User implements WithId {
 
     public void setRole(UsersRole role) {
         this.role = role;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 }

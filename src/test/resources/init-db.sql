@@ -7,7 +7,8 @@ CREATE TABLE users (
     created_at timestamp,
     locked boolean,
     email varchar,
-    role varchar
+    role varchar,
+    active boolean
 );
 
 

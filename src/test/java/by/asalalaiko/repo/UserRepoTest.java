@@ -32,7 +32,7 @@ public class UserRepoTest {
     }
 
     @Test
-    public void testPersonRepoInsertGet(){
+    public void testUserRepoInsertGet(){
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         User user = new User();

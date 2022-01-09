@@ -37,7 +37,8 @@ public class UserRepo extends AbstractCRUDRepository<User> {
                 "created_at", "'" + Timestamp.valueOf(user.getCreated()).toString() + "'",
                 "locked", "'" + user.getLocked() + "'",
                 "email", "'" + user.getEmail() +"'",
-                "role", "" + String.valueOf(user.getRole().ordinal())
+                "role", "'" + String.valueOf(user.getRole().ordinal()) +"'",
+                "active",""+ user.getActive()
         );
 
 

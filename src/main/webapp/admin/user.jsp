@@ -20,6 +20,7 @@
             <th>Created</th>
             <th>Locked</th>
             <th>Role</th>
+            <th>Activated</th>
             <th>Action</th>
         </tr>
         <c:forEach items="${users}" var="user">
@@ -32,6 +33,7 @@
                 <td>${user.created}</td>
                 <td>${user.locked}</td>
                 <td>${user.role}</td>
+                <td>${user.active}</td>
 
                 <td><a href="<c:url value="/admin/user/lock?id=${user.id}"/>">
                     <c:if test="${user.locked}">UNLOCK</c:if>

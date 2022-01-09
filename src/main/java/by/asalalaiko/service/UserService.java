@@ -57,8 +57,9 @@ public class UserService {
         user.setLastName(lastName);
         user.setEmail(email);
         user.setCreated(timestamp.toLocalDateTime());
-        user.setLocked(Boolean.TRUE); // TRUE - USER LOCKED
+        user.setLocked(Boolean.FALSE); // FALSE - USER NOT LOCKED
         user.setRole(UsersRole.USER);
+        user.setActive(Boolean.FALSE); // FALSE - USER NOT ACTIVATED
 
         User save = UserRepo.getInstance().save(user);
 
