@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 
+import by.asalalaiko.domain.User;
 import by.asalalaiko.exception.EntityDeleteException;
 import by.asalalaiko.exception.EntityNotFoundException;
 import by.asalalaiko.exception.EntityRetrieveException;
@@ -194,4 +195,6 @@ public abstract class AbstractCRUDRepository<T extends WithId> {
 	}
 
 	protected abstract Map<String, String> updateValues(T user);
+
+
 }

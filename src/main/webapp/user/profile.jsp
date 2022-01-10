@@ -9,7 +9,15 @@
 <jsp:include page="/blocks/navbar.jsp" />
 
 <div class="container border-5" >
-    <H1>Profile user</H1>
+    <c:if test="${sessionScope.user.active == 'FALSE'}">
+        <h1>Sorry, you are not activated</h1>
+    </c:if>
+
+    <c:if test="${sessionScope.user.active == 'TRUE'}">
+        <h1>User - ${user.login} </h1>
+    </c:if>
+
+
 </div>
 <jsp:include page="/blocks/footer.jsp" />
 </body>

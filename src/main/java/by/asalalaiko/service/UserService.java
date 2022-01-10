@@ -11,9 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+import javax.mail.MessagingException;
 import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Random;
 
 public class UserService {
 
@@ -44,6 +46,15 @@ public class UserService {
         UserRepo.getInstance().save(user);
     }
 
+    public User activateUser(String code){
+        User user =  UserRepo.getInstance().findByCode(code);
+         if (user != null){
+             user.setActive(Boolean.TRUE);
+             UserRepo.getInstance().save(user);
+         }
+        return user;
+    }
+
     public User findByLogin(String login){
         return UserRepo.getInstance().findByLogin(login);
     }
@@ -65,14 +76,15 @@ public class UserService {
         user.setLocked(Boolean.FALSE); // FALSE - USER NOT LOCKED
         user.setRole(UsersRole.USER);
         user.setActive(Boolean.FALSE); // FALSE - USER NOT ACTIVATED
+        user.setActionCode(generateActionCode());
 
         User save = UserRepo.getInstance().save(user);
 
-//        try {
-//           // EmailService.getInstance().notifyUserRegistered(email, save.getId());
-//        } catch (MessagingException e) {
-//            LOGGER.error("MEssage sending failed", e);
-//        }
+        try {
+            EmailService.getInstance().notifyUserRegistered(email, save.getId(), save.getActionCode());
+        } catch (MessagingException e) {
+            LOGGER.error("Message sending failed", e);
+        }
         return save;
     }
 
@@ -91,6 +103,20 @@ public class UserService {
 
     private String hashPassword(String password) {
         return DigestUtils.md5Hex(password).toUpperCase();
+    }
+
+    private String generateActionCode(){
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 10;
+        Random random = new Random();
+
+        String generatedString = random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+        return generatedString;
     }
 
 }

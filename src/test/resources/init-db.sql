@@ -8,7 +8,9 @@ CREATE TABLE users (
     locked boolean,
     email varchar,
     role varchar,
-    active boolean
+    active boolean,
+    action_code varchar
+
 );
 
 

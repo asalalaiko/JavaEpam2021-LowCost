@@ -44,6 +44,8 @@ public class UserRepoTest {
         user.setLogin("admin");
         user.setPassword("admin");
         user.setRole(UsersRole.ADMIN);
+        user.setActive(Boolean.FALSE);
+        user.setActionCode("0123456789");
 
         UserRepo.getInstance().save(user);
 

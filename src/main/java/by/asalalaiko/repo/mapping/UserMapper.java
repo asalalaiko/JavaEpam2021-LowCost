@@ -23,6 +23,7 @@ public class UserMapper implements RowMapper<User>{
         int ordinal = rs.getInt("role");
         user.setRole(UsersRole.getByOrdinal(ordinal));
         user.setActive(rs.getBoolean("active"));
+        user.setActionCode(rs.getString("action_code"));
 
         return user;
     }

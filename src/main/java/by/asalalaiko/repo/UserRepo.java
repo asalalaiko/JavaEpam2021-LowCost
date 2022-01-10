@@ -38,7 +38,8 @@ public class UserRepo extends AbstractCRUDRepository<User> {
                 "locked", "'" + user.getLocked() + "'",
                 "email", "'" + user.getEmail() +"'",
                 "role", "'" + String.valueOf(user.getRole().ordinal()) +"'",
-                "active",""+ user.getActive()
+                "active","'"+ user.getActive() +"'",
+                "action_code","'"+ user.getActionCode() +"'"
         );
 
 
@@ -62,6 +63,27 @@ public class UserRepo extends AbstractCRUDRepository<User> {
 
         } catch (SQLException e) {
             LOGGER.error("Something went wrong during user retrieval by login=" + login, e);
+            throw new EntityNotFoundException(e);
+        }
+    }
+
+    public User findByCode(String code) {
+        String SELECT_BY_CODE = String.format(SELECT_STATEMENT, " users ").concat("WHERE action_code = ").concat("'")
+                .concat(code).concat("'");
+        try (Connection connection = ConnectionPoolProvider.getConnection()) {
+
+            ResultSet resultSet = connection.createStatement().executeQuery(SELECT_BY_CODE);
+
+            if (resultSet.next()) {
+
+                User entity = getRm().toObject(resultSet);
+                return entity;
+            } else {
+                return null;
+            }
+
+        } catch (SQLException e) {
+            LOGGER.error("Something went wrong during user retrieval by action_code=" + code, e);
             throw new EntityNotFoundException(e);
         }
     }
