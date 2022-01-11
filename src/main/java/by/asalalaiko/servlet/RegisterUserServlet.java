@@ -29,8 +29,7 @@ public class RegisterUserServlet extends HttpServlet {
 
 
         String gRecaptchaResponse = req.getParameter("g-recaptcha-response");
-        boolean verify = VerifyRecaptchaServise.isCaptchaValid("6Lc_mwQeAAAAAPAt7FGJhSM1O94J_p7tFojNcMWl",
-                gRecaptchaResponse);
+        boolean verify = VerifyRecaptchaServise.getInstance().verify(gRecaptchaResponse);
 
 
         if(login.equals("") || password.equals("") || email.equals("")) {

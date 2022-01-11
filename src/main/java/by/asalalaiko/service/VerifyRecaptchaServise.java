@@ -1,55 +1,45 @@
 package by.asalalaiko.service;
 
-import org.json.JSONObject;
+import by.asalalaiko.config.Configuration;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
-import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Properties;
 
 
 public class VerifyRecaptchaServise {
-    public static final String url = "https://www.google.com/recaptcha/api/siteverify";
-    public static final String secret = "6LfQR0UaAAAAAEnBOKDdQA2eCDZ31uSFi33M8G-q";
-    private final static String USER_AGENT = "Mozilla/5.0";
 
-    public static boolean isCaptchaValid(String secretKey, String response) {
-        try {
-            String url = "https://www.google.com/recaptcha/api/siteverify",
-                    params = "secret=" + secretKey + "&response=" + response;
+    private static VerifyRecaptchaServise instance;
 
-            HttpURLConnection http = (HttpURLConnection) new URL(url).openConnection();
-            http.setDoOutput(true);
-            http.setRequestMethod("POST");
-            http.setRequestProperty("Content-Type",
-                    "application/x-www-form-urlencoded; charset=UTF-8");
-            OutputStream out = http.getOutputStream();
-            out.write(params.getBytes("UTF-8"));
-            out.flush();
-            out.close();
+    private static String url ;
+    private static String secret ;
+    private static String USER_AGENT ;
 
-            InputStream res = http.getInputStream();
-            BufferedReader rd = new BufferedReader(new InputStreamReader(res, "UTF-8"));
+    private VerifyRecaptchaServise() {
 
-            StringBuilder sb = new StringBuilder();
-            int cp;
-            while ((cp = rd.read()) != -1) {
-                sb.append((char) cp);
-            }
-            JSONObject json = new JSONObject(sb.toString());
-            res.close();
+        Properties applicationProps = Configuration.getApplicationProps();
+        url = applicationProps.getProperty("recaptcha.url");
+        secret = applicationProps.getProperty("recaptcha.secret");
+        USER_AGENT = applicationProps.getProperty("recaptcha.USER_AGENT");
 
-            return json.getBoolean("success");
-        } catch (Exception e) {
-            //e.printStackTrace();
+        instance = this;
+    }
+
+    public static VerifyRecaptchaServise getInstance() {
+        if (instance == null) {
+            VerifyRecaptchaServise.instance = new VerifyRecaptchaServise();
         }
-        return false;
+        return instance;
     }
 
     public static boolean verify(String gRecaptchaResponse) throws IOException {
+
+
+
         if (gRecaptchaResponse == null || "".equals(gRecaptchaResponse)) {
             return false;
         }
