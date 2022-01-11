@@ -2,8 +2,6 @@ package by.asalalaiko.domain;
 
 import by.asalalaiko.repo.WithId;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class User implements WithId {

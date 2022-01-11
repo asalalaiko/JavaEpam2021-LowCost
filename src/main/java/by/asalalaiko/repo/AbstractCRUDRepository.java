@@ -1,13 +1,5 @@
 package by.asalalaiko.repo;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-
-import by.asalalaiko.domain.User;
 import by.asalalaiko.exception.EntityDeleteException;
 import by.asalalaiko.exception.EntityNotFoundException;
 import by.asalalaiko.exception.EntityRetrieveException;
@@ -16,6 +8,12 @@ import by.asalalaiko.repo.jdbc.ConnectionPoolProvider;
 import by.asalalaiko.repo.mapping.RowMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 public abstract class AbstractCRUDRepository<T extends WithId> {

@@ -50,11 +50,12 @@ CREATE TABLE "city" (
 
 CREATE TABLE "ticket" (
                          "id" SERIAL PRIMARY KEY,
-                         "created_at" timestamp,
+                          "passenger" varchar ,
                          "baggage" boolean,
                          "priority" boolean,
                          "flight_id" int,
-                         "user_id" int
+                         "user_id" int,
+                         status varchar
 );
 
 ALTER TABLE "flight" ADD FOREIGN KEY ("airport_start_id") REFERENCES "airport" ("id");
