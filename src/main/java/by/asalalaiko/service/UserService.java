@@ -1,20 +1,16 @@
 package by.asalalaiko.service;
 
-import by.asalalaiko.domain.Plane;
 import by.asalalaiko.domain.User;
 import by.asalalaiko.domain.UsersRole;
 import by.asalalaiko.exception.UserNotFoundForLoginException;
-import by.asalalaiko.repo.PlaneRepo;
 import by.asalalaiko.repo.UserRepo;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 import javax.mail.MessagingException;
 import java.sql.Timestamp;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Random;
 
 public class UserService {

@@ -1,13 +1,10 @@
 package by.asalalaiko.servlet.admin.flight;
 
-import by.asalalaiko.domain.Airport;
-import by.asalalaiko.domain.City;
-import by.asalalaiko.domain.Flight;
-import by.asalalaiko.domain.Plane;
+import by.asalalaiko.domain.*;
 import by.asalalaiko.service.AirportService;
-import by.asalalaiko.service.CityService;
 import by.asalalaiko.service.FlightService;
 import by.asalalaiko.service.PlaneService;
+import by.asalalaiko.service.TicketService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @WebServlet(value = "/admin/flight/save", name = "flightSaveAdmin")
 public class FlightSaveServlet extends HttpServlet {
@@ -31,14 +27,21 @@ public class FlightSaveServlet extends HttpServlet {
         Integer km = Integer.valueOf(req.getParameter("km"));
         Airport startAirport = AirportService.getInstance().getById(Long.valueOf(req.getParameter("startAirport")));
         Airport finishAirport = AirportService.getInstance().getById(Long.valueOf(req.getParameter("finishAirport")));
-
+        User user = (User) req.getSession().getAttribute("user");
         Plane plane = PlaneService.getInstance().getById(Long.valueOf(req.getParameter("plane")));
         BigDecimal cost = BigDecimal.valueOf(Double.valueOf(req.getParameter("cost")));
 
 
         if (id == "") {
             Flight flight = FlightService.getInstance().create(start, finish, km, startAirport, finishAirport, plane, cost);
+            for (int i=0; i<flight.getPlane().getSeats(); i++){
+                TicketService.getInstance().create("", Boolean.FALSE, Boolean.FALSE, flight, user, TicketStatus.FREE);
+            }
+
+
+
             req.setAttribute("createdFlight", flight);
+
         } else {
             Flight flight = FlightService.getInstance().update(Long.valueOf(id), start, finish, km, startAirport, finishAirport, plane, cost);
             req.setAttribute("updatedFlight", flight);
