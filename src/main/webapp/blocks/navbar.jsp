@@ -12,6 +12,7 @@
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 
         </ul>
+
         <c:if test="${sessionScope.user ne null}">
             <div class="nav-item">Hello ${sessionScope.user.login}!</div>
             <c:if test="${sessionScope.user.role == 'ADMIN'}">
@@ -24,6 +25,9 @@
         </c:if>
         <c:if test="${sessionScope.user eq null}">
             <a class="nav-link my-2 my-sm-0 " href="${pageContext.request.contextPath}/login.jsp">Login</a>
+        </c:if>
+        <c:if test="${sessionScope.cartFlights ne null}">
+            <a class="nav-link my-2 my-sm-0 " href="<c:url value = "/cart"/>">Cart (${sessionScope.cartFlights.size()})</a>
         </c:if>
     </div>
 </nav>

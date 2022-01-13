@@ -20,10 +20,34 @@
     <jsp:include page="blocks/navbar.jsp" />
 
         <div class="container border-5" >
-            <h1>Добро пожаловать!</h1>
+            <h1>Welcome in Lowcost Company!</h1>
 
-            ${pageContext.request.contextPath}<br>
-            ${sessionScope.user.role}
+            <form class="main_form " method="post" action="/JavaEpam2021_LowCost_war/index">
+                <select class="form_contril" id="startCity" name="startCity">
+                    <option value="none" selected disabled hidden>Select an City from</option>
+                    <c:forEach items="${cities}" var="city">
+                        <option value=${city.id}>
+                                ${city.name}
+                        </option>
+                    </c:forEach>
+                </select>
+                <select class="form_contril" id="finishCity" name="finishCity">
+                    <option value="none" selected disabled hidden>Select an City to</option>
+                    <c:forEach items="${cities}" var="city">
+                        <option value=${city.id}>
+                                ${city.name}
+                        </option>
+                    </c:forEach>
+                </select>
+                <input class="form_contril" type="date" name="dateStart">
+                <input class="send_btn" type="submit" value="Search">
+            </form>
+
+            <c:forEach items="${flights}" var="flight">
+                (${flight.startAirport.city.name} - ${flight.finishAirport.city.name}) - ${flight.cost}
+                <a href="${pageContext.request.contextPath}/addcart?id=${flight.id}">Add cart</a><br>
+            </c:forEach>
+
         </div>
 
 

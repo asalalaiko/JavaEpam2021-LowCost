@@ -3,10 +3,7 @@ package by.asalalaiko.service;
 import by.asalalaiko.domain.Airport;
 import by.asalalaiko.domain.Flight;
 import by.asalalaiko.domain.Plane;
-import by.asalalaiko.domain.User;
-import by.asalalaiko.repo.AirportRepo;
 import by.asalalaiko.repo.FlightRepo;
-import by.asalalaiko.repo.UserRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +30,8 @@ public class FlightService {
     }
 
     public static Collection<Flight> findAll() {return FlightRepo.getInstance().findAll();    }
+
+    public static Flight findById(Long id) {return FlightRepo.getInstance().getById(id);    }
 
     public static void deleteById(Long id) { FlightRepo.getInstance().deleteById(id);
     }

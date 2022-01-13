@@ -72,9 +72,9 @@
             <tr>
                 <td>${flight.id}</td>
                 <td>${flight.start}</td>
-                <td>${flight.startAirport.name}</td>
+                <td>${flight.startAirport.name}(${flight.startAirport.city.name})</td>
                 <td>${flight.finish}</td>
-                <td>${flight.finishAirport.name}</td>
+                <td>${flight.finishAirport.name}(${flight.finishAirport.city.name})</td>
                 <td>${flight.km}</td>
                 <td>${flight.plane.name}</td>
                 <td>${flight.cost}</td>
