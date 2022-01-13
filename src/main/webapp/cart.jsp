@@ -23,9 +23,8 @@
                 <td>(${flight.startAirport.city.name} - ${flight.finishAirport.city.name})</td>
                 <td>${flight.cost}</td>
                 <td> <input placeholder="" type="number"
-                            name="quantity"  step="1" min="1"></td>
-                <td><a href="<c:url value="/admin/plane/edit?id=${flight.id}"/>">Edit</a></td>
-                <td><a href="<c:url value="/admin/plane/del?id=${flight.id}"/>">Delete</a></td>
+                            name="quantity"  value="1" step="1" min="1"></td>
+                <td><a href="<c:url value="/cart/del?id=${flight.id}"/>">Delete</a></td>
             </tr>
         </c:forEach>
     </table>
