@@ -2,6 +2,8 @@ package by.asalalaiko.repo;
 
 
 import by.asalalaiko.domain.Ticket;
+import by.asalalaiko.domain.TicketStatus;
+import by.asalalaiko.exception.EntityNotFoundException;
 import by.asalalaiko.exception.EntitySaveException;
 import by.asalalaiko.repo.jdbc.ConnectionPoolProvider;
 import by.asalalaiko.repo.mapping.TicketMapper;
@@ -9,6 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 public class TicketRepo  extends AbstractCRUDRepository<Ticket>{
@@ -75,9 +80,44 @@ public class TicketRepo  extends AbstractCRUDRepository<Ticket>{
         }
     }
 
+    public Collection<Ticket> findByFlightIdAndStatus(Long id, TicketStatus status){
+
+        String idStr = String.valueOf(id);
+        String statusSTR = String.valueOf(status.ordinal());
+
+        String SELECT_BY_FLIGHT_AND_STATUS = String.format(SELECT_STATEMENT, " ticket ").concat("WHERE flight_id = ").concat("'")
+                .concat(idStr).concat("' AND status = ").concat("'")
+                .concat(statusSTR).concat("'");
+        try (Connection connection = ConnectionPoolProvider.getConnection()) {
+
+            ResultSet resultSet = connection.createStatement().executeQuery(SELECT_BY_FLIGHT_AND_STATUS);
+
+            List<Ticket> entities = new ArrayList<>();
+
+            while  (resultSet.next()) {
+
+                entities.add(rm.toObject(resultSet));
+            }
+                return entities;
+
+        } catch (SQLException e) {
+            LOGGER.error("Something went wrong during FlightId retrieval by login=" + id+", status="+ status, e);
+            throw new EntityNotFoundException(e);
+        }
+    }
+
     @Override
     protected Map<String, String> updateValues(Ticket ticket) {
-        return null;
+
+        return Map.of(
+                "passenger", "'" + ticket.getPassenger() + "'",
+                "baggage", "'" + ticket.getBaggage() + "'",
+                "priority", "'" + ticket.getPriority() + "'",
+                "flight_id", "'" + ticket.getFlight().getId() + "'",
+                "user_id", "'" + ticket.getUser().getId() + "'",
+                "role", "'" + String.valueOf(ticket.getStatus().ordinal()) +"'"
+
+        );
     }
 
     private void setValues(Ticket ticket, PreparedStatement ps) throws SQLException {
