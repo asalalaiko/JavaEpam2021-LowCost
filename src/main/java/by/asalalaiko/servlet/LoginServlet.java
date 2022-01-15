@@ -21,8 +21,8 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String login = req.getParameter("login").trim();;
-        String password = req.getParameter("password").trim();;
+        String login = req.getParameter("login").trim();
+        String password = req.getParameter("password").trim();
 
         if(login.equals("") || password.equals("")) {
             String errorMessage = "Invalid Login or Password";
@@ -35,6 +35,6 @@ public class LoginServlet extends HttpServlet {
 
         req.getSession().setAttribute("user", user);
 
-        req.getRequestDispatcher("/index").forward(req, resp);
+        req.getRequestDispatcher("").forward(req, resp);
     }
 }

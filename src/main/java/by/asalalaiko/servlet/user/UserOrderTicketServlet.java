@@ -1,6 +1,8 @@
 package by.asalalaiko.servlet.user;
 
+import by.asalalaiko.domain.Flight;
 import by.asalalaiko.domain.TicketStatus;
+import by.asalalaiko.service.FlightService;
 import by.asalalaiko.service.TicketService;
 
 import javax.servlet.ServletException;
@@ -21,6 +23,7 @@ public class UserOrderTicketServlet extends HttpServlet {
         Long flightId = Long.valueOf(req.getParameter("id"));
         Long quantity = Long.valueOf(req.getParameter("quantity"));
         TicketStatus status = TicketStatus.FREE;
+
         try {
 
             Integer qFreeTickets = TicketService.findByFlightIdAndStatus(flightId, status).size();
@@ -29,13 +32,17 @@ public class UserOrderTicketServlet extends HttpServlet {
             if (qFreeTickets >= quantity){
 
                 message = "Free tickets - " + qFreeTickets;
+
+                Flight flight = FlightService.findById(flightId);
+
+
                 req.setAttribute("message", message);
-                req.setAttribute("flightId", flightId);
                 req.setAttribute("quantity", quantity);
-                req.setAttribute("user", flightId);
+                req.setAttribute("flight", flight);
+
             }
             else {
-                message = "Invalid Login or Password";
+                message = "Sorry, but you don't have enough tickets";
                 req.setAttribute("message", message);
             }
 

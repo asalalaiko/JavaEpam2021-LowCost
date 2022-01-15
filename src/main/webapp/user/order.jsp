@@ -8,33 +8,36 @@
 <body>
 <jsp:include page="/blocks/navbar.jsp" />
 
-${Message}
+
 
     <div class="container border-5" >
+        ${message}
 
-        <c:forEach items="${quantity}" var="quantity">
             <form method="post" action="/JavaEpam2021_LowCost_war/user/pay">
+                <input type="hidden" name="flight" value="${flight.id}">
+                <input type="hidden" name="quantity" value="${quantity}">
                 <div class="row">
                     <div class="col-md-12 ">
-                        <input class="form_contril" placeholder="Passenger " type="text" name="passenger" >
+                        (${flight.start}) ${flight.startAirport.name}-${flight.finishAirport.name}
                     </div>
                     <div class="col-md-12 ">
-                        <input type="checkbox" id="baggage" name="baggage">
-                        <label for="baggage"> Add baggage</label><br>
+                        ${quantity} - passenger(-s)
                     </div>
                     <div class="col-md-12 ">
-                        <input type="checkbox" id="priority" name="baggage">
-                        <label for="priority"> Priority registration</label><br>
+                        <input type="checkbox" id="baggage" name="baggage" value="${baggage}">
+                        <label for="baggage"> Add baggage(* $)</label><br>
                     </div>
+                    <div class="col-md-12 ">
+                        <input type="checkbox" id="priority" name="priority" value="${priority}">
+                        <label for="priority"> Priority registration (* $)</label><br>
+                    </div>
+
+                   
                     <div class="col-sm-12">
                         <input class="send_btn" type="submit" value="Pay">
                     </div>
                 </div>
             </form>
-
-        </c:forEach>
-
-
 
     </div>
 <jsp:include page="/blocks/footer.jsp" />

@@ -1,8 +1,5 @@
 package by.asalalaiko.servlet.cart;
 
-import by.asalalaiko.domain.Flight;
-import by.asalalaiko.service.FlightService;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,7 +23,7 @@ public class AddToCartServlet extends HttpServlet {
         Long flightId = Long.valueOf(req.getParameter("id"));
 
         try {
-        Flight flight = FlightService.findById(flightId);
+
         cartFlights.add(flightId);
         req.getSession().setAttribute("cartFlights", cartFlights);
 
