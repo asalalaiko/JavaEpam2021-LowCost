@@ -15,6 +15,9 @@ public class Flight implements WithId {
     private Airport finishAirport;
     private Plane plane;
     private BigDecimal cost;
+    private BigDecimal costBaggage;
+    private BigDecimal costPriority;
+
 
 
     @Override
@@ -81,5 +84,21 @@ public class Flight implements WithId {
 
     public void setCost(BigDecimal minCost) {
         this.cost = minCost;
+    }
+
+    public BigDecimal getCostBaggage() {
+        return costBaggage;
+    }
+
+    public void setCostBaggage(BigDecimal costBaggage) {
+        this.costBaggage = costBaggage;
+    }
+
+    public BigDecimal getCostPriority() {
+        return costPriority;
+    }
+
+    public void setCostPriority(BigDecimal costPriority) {
+        this.costPriority = costPriority;
     }
 }

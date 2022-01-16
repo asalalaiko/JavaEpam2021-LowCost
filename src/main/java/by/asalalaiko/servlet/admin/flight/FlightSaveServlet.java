@@ -29,11 +29,16 @@ public class FlightSaveServlet extends HttpServlet {
         Airport finishAirport = AirportService.getInstance().getById(Long.valueOf(req.getParameter("finishAirport")));
         User user = (User) req.getSession().getAttribute("user");
         Plane plane = PlaneService.getInstance().getById(Long.valueOf(req.getParameter("plane")));
-        BigDecimal cost = BigDecimal.valueOf(Double.valueOf(req.getParameter("cost")));
+        BigDecimal costBaggage = BigDecimal.valueOf(Double.valueOf(req.getParameter("costBaggage")));
+        BigDecimal costPriority = BigDecimal.valueOf(Double.valueOf(req.getParameter("costPriority")));
 
+
+        BigDecimal cost = BigDecimal.valueOf(
+                (km*plane.getCostKM().intValue() +  startAirport.getTax().intValue() +finishAirport.getTax().intValue())/plane.getSeats().intValue()
+        );
 
         if (id == "") {
-            Flight flight = FlightService.getInstance().create(start, finish, km, startAirport, finishAirport, plane, cost);
+            Flight flight = FlightService.getInstance().create(start, finish, km, startAirport, finishAirport, plane, cost, costBaggage,costPriority);
             for (int i=0; i<flight.getPlane().getSeats(); i++){
                 TicketService.getInstance().create("", Boolean.FALSE, Boolean.FALSE, flight, user, TicketStatus.FREE);
             }
@@ -43,7 +48,7 @@ public class FlightSaveServlet extends HttpServlet {
             req.setAttribute("createdFlight", flight);
 
         } else {
-            Flight flight = FlightService.getInstance().update(Long.valueOf(id), start, finish, km, startAirport, finishAirport, plane, cost);
+            Flight flight = FlightService.getInstance().update(Long.valueOf(id), start, finish, km, startAirport, finishAirport, plane, cost, costBaggage, costPriority);
             req.setAttribute("updatedFlight", flight);
         }
 

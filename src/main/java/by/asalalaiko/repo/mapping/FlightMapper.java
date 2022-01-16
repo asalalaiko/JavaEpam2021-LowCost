@@ -22,6 +22,8 @@ public class FlightMapper implements RowMapper<Flight>{
         flight.setFinishAirport(AirportRepo.getInstance().getById(rs.getLong("airport_end_id")));
         flight.setPlane(PlaneRepo.getInstance().getById(rs.getLong("plane_id")));
         flight.setCost(rs.getBigDecimal("cost"));
+        flight.setCostBaggage(rs.getBigDecimal("cost_baggage"));
+        flight.setCostPriority(rs.getBigDecimal("cost_priority"));
 
         return flight;
     }

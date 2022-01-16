@@ -9,15 +9,12 @@
 <jsp:include page="/blocks/navbar.jsp" />
 <div class="container border-5" >
 
-   <table>
+             <a href="<c:url value="/admin/airport"/>">Airports</a> <br>
+             <a href="<c:url value="/admin/city"/>">Cities</a> <br>
+             <a href="<c:url value="/admin/flight"/>">Flights</a> <br>
+             <a href="<c:url value="/admin/plane"/>">Planes</a> <br>
+             <a href="<c:url value="/admin/user"/>">Users</a> <br>
 
-            <tr><a href="<c:url value="/admin/airport"/>">Airports</a></tr>
-            <tr><a href="<c:url value="/admin/city"/>">Cities</a></tr>
-            <tr><a href="<c:url value="/admin/flight"/>">Flights</a></tr>
-            <tr><a href="<c:url value="/admin/plane"/>">Planes</a></tr>
-            <tr><a href="<c:url value="/admin/user"/>">Users</a></tr>
-
-    </table>
 </div>
 <jsp:include page="/blocks/footer.jsp" />
 </body>

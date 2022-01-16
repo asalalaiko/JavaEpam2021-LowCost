@@ -41,7 +41,7 @@ public class FlightService {
     }
 
 
-    public Flight create(LocalDateTime start, LocalDateTime finish, Integer km, Airport startAirport, Airport finishAirport, Plane plane, BigDecimal cost) {
+    public Flight create(LocalDateTime start, LocalDateTime finish, Integer km, Airport startAirport, Airport finishAirport, Plane plane, BigDecimal cost, BigDecimal costBaggage, BigDecimal costPriority) {
         Flight flight = new Flight();
         flight.setStart(start);
         flight.setFinish(finish);
@@ -50,11 +50,13 @@ public class FlightService {
         flight.setFinishAirport(finishAirport);
         flight.setPlane(plane);
         flight.setCost(cost);
+        flight.setCostBaggage(costBaggage);
+        flight.setCostPriority(costPriority);
         FlightRepo.getInstance().save(flight);
         return flight;
     }
 
-    public Flight update(Long id, LocalDateTime start, LocalDateTime finish, Integer km, Airport startAirport, Airport finishAirport, Plane plane, BigDecimal cost) {
+    public Flight update(Long id, LocalDateTime start, LocalDateTime finish, Integer km, Airport startAirport, Airport finishAirport, Plane plane, BigDecimal cost, BigDecimal costBaggage, BigDecimal costPriority) {
         Flight flight = new Flight();
         flight.setId(id);
         flight.setStart(start);
@@ -64,6 +66,8 @@ public class FlightService {
         flight.setFinishAirport(finishAirport);
         flight.setPlane(plane);
         flight.setCost(cost);
+        flight.setCostBaggage(costBaggage);
+        flight.setCostPriority(costPriority);
         FlightRepo.getInstance().save(flight);
         return flight;
     }

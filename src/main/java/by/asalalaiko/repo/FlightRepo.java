@@ -2,11 +2,9 @@ package by.asalalaiko.repo;
 
 
 import by.asalalaiko.domain.Flight;
-import by.asalalaiko.domain.Plane;
 import by.asalalaiko.exception.EntitySaveException;
 import by.asalalaiko.repo.jdbc.ConnectionPoolProvider;
 import by.asalalaiko.repo.mapping.FlightMapper;
-import by.asalalaiko.repo.mapping.PlaneMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,8 +17,8 @@ public class FlightRepo extends AbstractCRUDRepository<Flight>{
 
     private static FlightRepo instance;
 
-    private static final String INSERT_STATEMENT = "INSERT INTO flight (start_date, end_date, km, airport_start_id, airport_end_id, plane_id, cost) VALUES (?,?,?,?,?,?,?)";
-    private static final String UPDATE_STATEMENT = "UPDATE flight SET start_date = ?, end_date=?, km=?, airport_start_id=?, airport_end_id=?, plane_id=?, cost=? WHERE id = ?";
+    private static final String INSERT_STATEMENT = "INSERT INTO flight (start_date, end_date, km, airport_start_id, airport_end_id, plane_id, cost, cost_baggage, cost_priority) VALUES (?,?,?,?,?,?,?,?,?)";
+    private static final String UPDATE_STATEMENT = "UPDATE flight SET start_date = ?, end_date=?, km=?, airport_start_id=?, airport_end_id=?, plane_id=?, cost=?, cost_baggage=?, cost_priority=?  WHERE id = ?";
 
 
     public FlightRepo() {
@@ -48,7 +46,7 @@ public class FlightRepo extends AbstractCRUDRepository<Flight>{
             setValues(flight, ps);
 
             if (flight.getId() != null) {
-                ps.setLong(8, flight.getId());
+                ps.setLong(10, flight.getId());
             }
 
             if (ps.executeUpdate() != 1) {
@@ -90,5 +88,7 @@ public class FlightRepo extends AbstractCRUDRepository<Flight>{
         ps.setLong(5, flight.getFinishAirport().getId());
         ps.setLong(6, flight.getPlane().getId());
         ps.setBigDecimal(7,flight.getCost());
+        ps.setBigDecimal(8,flight.getCostBaggage());
+        ps.setBigDecimal(9,flight.getCostPriority());
     }
 }

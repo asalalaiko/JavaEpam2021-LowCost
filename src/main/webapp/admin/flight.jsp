@@ -47,8 +47,11 @@
                         </option>
                     </c:forEach>
                 </select>
-                <input class="form_contril" placeholder="cost " type="number"
-                       name="cost" value="${flight.cost}" step="0.01" min="0">
+
+                <input class="form_contril" placeholder="cost baggage " type="number"
+                       name="costBaggage" value="${flight.costBaggage}" step="0.01" min="0">
+                <input class="form_contril" placeholder="cost priority " type="number"
+                       name="costPriority" value="${flight.costPriority}" step="0.01" min="0">
             </div>
             <div class="col-sm-12">
                 <input class="send_btn" type="submit" value="Save">
@@ -64,7 +67,9 @@
             <th>Finish Airport</th>
             <th>Distance</th>
             <th>Plane</th>
-            <th>Cost</th>
+            <th>Cost Ticket</th>
+            <th>Сost Baggage</th>
+            <th>Сost Priority</th>
             <th>Edit</th>
             <th>Delete</th>
         </tr>
@@ -78,6 +83,8 @@
                 <td>${flight.km}</td>
                 <td>${flight.plane.name}</td>
                 <td>${flight.cost}</td>
+                <td>${flight.costBaggage}</td>
+                <td>${flight.costPriority}</td>
                 <td><a href="<c:url value="/admin/flight/edit?id=${flight.id}"/>">Edit</a></td>
                 <td><a href="<c:url value="/admin/flight/del?id=${flight.id}"/>">Delete</a></td>
             </tr>
