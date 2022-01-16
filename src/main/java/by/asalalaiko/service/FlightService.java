@@ -71,4 +71,11 @@ public class FlightService {
         FlightRepo.getInstance().save(flight);
         return flight;
     }
+
+    public Flight updateToCost(Long id, BigDecimal cost){
+        Flight flight = FlightRepo.getInstance().getById(id);
+        flight.setCost(cost);
+        FlightRepo.getInstance().save(flight);
+        return flight;
+    }
 }
