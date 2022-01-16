@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(value = "/login", name = "login")
+@WebServlet(value = "/login", name = "loginServlet")
 public class LoginServlet extends HttpServlet {
 
 
@@ -35,6 +35,6 @@ public class LoginServlet extends HttpServlet {
 
         req.getSession().setAttribute("user", user);
 
-        req.getRequestDispatcher("").forward(req, resp);
+        req.getRequestDispatcher("/home").forward(req, resp);
     }
 }

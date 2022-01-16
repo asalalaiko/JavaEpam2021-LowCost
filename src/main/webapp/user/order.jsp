@@ -32,7 +32,7 @@
                         <label for="priority"> Priority registration (* $)</label><br>
                     </div>
 
-                   
+
                     <div class="col-sm-12">
                         <input class="send_btn" type="submit" value="Pay">
                     </div>

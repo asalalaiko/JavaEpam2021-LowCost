@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashSet;
 
 @WebServlet(value = "/user/order", name = "orderTicket")
 public class UserOrderTicketServlet extends HttpServlet {
@@ -39,7 +40,11 @@ public class UserOrderTicketServlet extends HttpServlet {
                 req.setAttribute("message", message);
                 req.setAttribute("quantity", quantity);
                 req.setAttribute("flight", flight);
-
+                HashSet<Long> flights  =(HashSet<Long>) req.getSession().getAttribute("cartFlights");
+                if( flights != null) {
+                    flights.removeIf(k -> k.equals(flightId));
+                    req.getSession().setAttribute("cartFlights", flights);
+                }
             }
             else {
                 message = "Sorry, but you don't have enough tickets";

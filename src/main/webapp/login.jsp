@@ -8,10 +8,11 @@
 <body>
 <jsp:include page="blocks/navbar.jsp" />
 
-<p style="color: #ff0000;">${errorMessage}</p>
+
 
 <div class="container border-5" >
-    <form method="post" action="/JavaEpam2021_LowCost_war/login">
+    <p style="color: #ff0000;">${errorMessage}</p>
+    <form method="post" action="${pageContext.request.contextPath}/login">
         <div class="row justify-content-center  p-1">
             <label for="login">Login:</label><br>
             <input type="text" id="login" name="login"><br>
