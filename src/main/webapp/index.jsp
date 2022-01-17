@@ -22,7 +22,7 @@
         <div class="container border-5" >
             <h1>Welcome in Lowcost Company!</h1>
 
-            <form class="main_form " method="post" action="/JavaEpam2021_LowCost_war/index">
+            <form class="main_form " method="post" action="/JavaEpam2021_LowCost_war/home">
                 <select class="form_contril" id="startCity" name="startCity">
                     <option value="none" selected disabled hidden>Select an City from</option>
                     <c:forEach items="${cities}" var="city">

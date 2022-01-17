@@ -105,6 +105,30 @@ public class TicketRepo  extends AbstractCRUDRepository<Ticket>{
             throw new EntityNotFoundException(e);
         }
     }
+    public Collection<Ticket> findByFlightId(Long id){
+
+        String idStr = String.valueOf(id);
+
+
+        String SELECT_BY_FLIGHT = String.format(SELECT_STATEMENT, " ticket ").concat("WHERE flight_id = ").concat("'")
+                .concat(idStr).concat("'");
+        try (Connection connection = ConnectionPoolProvider.getConnection()) {
+
+            ResultSet resultSet = connection.createStatement().executeQuery(SELECT_BY_FLIGHT);
+
+            List<Ticket> entities = new ArrayList<>();
+
+            while  (resultSet.next()) {
+
+                entities.add(rm.toObject(resultSet));
+            }
+            return entities;
+
+        } catch (SQLException e) {
+            LOGGER.error("Something went wrong during FlightId retrieval by login=" + id, e);
+            throw new EntityNotFoundException(e);
+        }
+    }
 
     @Override
     protected Map<String, String> updateValues(Ticket ticket) {

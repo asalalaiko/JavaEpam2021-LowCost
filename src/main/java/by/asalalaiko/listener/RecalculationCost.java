@@ -1,6 +1,6 @@
 package by.asalalaiko.listener;
 
-import by.asalalaiko.task.RecalculationCostTask;
+import by.asalalaiko.listener.task.RecalculationCostTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
