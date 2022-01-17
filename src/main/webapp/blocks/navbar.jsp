@@ -19,7 +19,7 @@
                 <a class="nav-link my-2 my-sm-0 "  href="${pageContext.request.contextPath}/admin/profile.jsp">Profile</a>
             </c:if>
             <c:if test="${sessionScope.user.role == 'USER'}">
-                <a class="nav-link my-2 my-sm-0 "  href="${pageContext.request.contextPath}/user/profile.jsp">Profile</a>
+                <a class="nav-link my-2 my-sm-0 "  href="${pageContext.request.contextPath}/user/profile">Profile</a>
             </c:if>
             <a class="nav-link my-2 my-sm-0 " href="<c:url value = "/logout"/>">Logout</a>
         </c:if>

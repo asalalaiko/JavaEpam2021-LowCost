@@ -3,6 +3,7 @@ package by.asalalaiko.repo;
 
 import by.asalalaiko.domain.Ticket;
 import by.asalalaiko.domain.TicketStatus;
+import by.asalalaiko.domain.User;
 import by.asalalaiko.exception.EntityNotFoundException;
 import by.asalalaiko.exception.EntitySaveException;
 import by.asalalaiko.repo.jdbc.ConnectionPoolProvider;
@@ -152,5 +153,29 @@ public class TicketRepo  extends AbstractCRUDRepository<Ticket>{
         ps.setLong(5, ticket.getUser().getId());
         ps.setString(6,String.valueOf(ticket.getStatus().ordinal()) );
 
+    }
+
+    public Collection<Ticket> findByUser(User user) {
+        String idStr = String.valueOf(user.getId());
+
+
+        String SELECT_BY_USER = String.format(SELECT_STATEMENT, " ticket ").concat("WHERE user_id = ").concat("'")
+                .concat(idStr).concat("'");
+        try (Connection connection = ConnectionPoolProvider.getConnection()) {
+
+            ResultSet resultSet = connection.createStatement().executeQuery(SELECT_BY_USER);
+
+            List<Ticket> entities = new ArrayList<>();
+
+            while  (resultSet.next()) {
+
+                entities.add(rm.toObject(resultSet));
+            }
+            return entities;
+
+        } catch (SQLException e) {
+            LOGGER.error("Something went wrong during user_id retrieval by login=" + idStr, e);
+            throw new EntityNotFoundException(e);
+        }
     }
 }

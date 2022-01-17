@@ -14,7 +14,27 @@
     </c:if>
 
     <c:if test="${sessionScope.user.active == 'TRUE'}">
-        <h1>User - ${user.login} </h1>
+
+        Your tickets:
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Fligth</th>
+                <th>Baggage</th>
+                <th>Priority</th>
+                <th>Status</th>
+            </tr>
+            <c:forEach items="${tickets}" var="ticket">
+                <tr>
+                    <td>${ticket.flight.start}</td>
+                    <td>(${ticket.flight.startAirport.city.name} - ${ticket.flight.finishAirport.city.name})</td>
+                    <td>${ticket.baggage}</td>
+                    <td>${ticket.priority}</td>
+                    <td>${ticket.status}</td>
+                </tr>
+            </c:forEach>
+        </table>
+
     </c:if>
 
 

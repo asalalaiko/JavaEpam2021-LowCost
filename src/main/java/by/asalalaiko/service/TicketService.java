@@ -38,6 +38,9 @@ public class TicketService {
     public static Collection<Ticket> findByFlightId(Long id) {return TicketRepo.getInstance().findByFlightId(id);
     }
 
+    public static Collection<Ticket> findByUser(User user) {return TicketRepo.getInstance().findByUser(user);
+    }
+
 
     public Ticket create(String passenger, Boolean baggage, Boolean priority, Flight flight, User user, TicketStatus status) {
           Ticket ticket = new Ticket();
