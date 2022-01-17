@@ -1,6 +1,7 @@
 package by.asalalaiko.repo;
 
 import by.asalalaiko.domain.Airport;
+import by.asalalaiko.exception.EntityNotFoundException;
 import by.asalalaiko.exception.EntitySaveException;
 import by.asalalaiko.repo.jdbc.ConnectionPoolProvider;
 import by.asalalaiko.repo.mapping.AirportMapper;
@@ -8,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class AirportRepo extends AbstractCRUDRepository<Airport>{
@@ -85,4 +88,25 @@ public class AirportRepo extends AbstractCRUDRepository<Airport>{
         ps.setLong(3, airport.getCity().getId());
     }
 
+    public List<Airport> getByCityId(String cityID) {
+
+
+        String SELECT_BY_CITY_ID = String.format(SELECT_STATEMENT, " airport ").concat("WHERE city_id = ").concat(cityID);
+        try (Connection connection = ConnectionPoolProvider.getConnection()) {
+
+            ResultSet resultSet = connection.createStatement().executeQuery(SELECT_BY_CITY_ID);
+
+            List<Airport> entities = new ArrayList<>();
+
+            while  (resultSet.next()) {
+
+                entities.add(rm.toObject(resultSet));
+            }
+            return entities;
+
+        } catch (SQLException e) {
+            LOGGER.error("Something went wrong during Airport retrieval by cityID=" + cityID, e);
+            throw new EntityNotFoundException(e);
+        }
+    }
 }

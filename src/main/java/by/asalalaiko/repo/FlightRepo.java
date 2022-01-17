@@ -2,6 +2,7 @@ package by.asalalaiko.repo;
 
 
 import by.asalalaiko.domain.Flight;
+import by.asalalaiko.exception.EntityNotFoundException;
 import by.asalalaiko.exception.EntitySaveException;
 import by.asalalaiko.repo.jdbc.ConnectionPoolProvider;
 import by.asalalaiko.repo.mapping.FlightMapper;
@@ -9,6 +10,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 public class FlightRepo extends AbstractCRUDRepository<Flight>{
@@ -91,4 +95,33 @@ public class FlightRepo extends AbstractCRUDRepository<Flight>{
         ps.setBigDecimal(8,flight.getCostBaggage());
         ps.setBigDecimal(9,flight.getCostPriority());
     }
+
+    public Collection<Flight> findByAirports(Long idStartAirport, Long idFinishAirport) {
+
+        String idSA = String.valueOf(idStartAirport);
+        String idFA = String.valueOf(idFinishAirport);
+
+
+        String SELECT_BY_START_AIRPORT_ID_AND_FINISH_AIRPORT_ID = String.format(SELECT_STATEMENT, " flight ").concat("WHERE airport_start_id = ").concat("'")
+                .concat(idSA).concat("' AND airport_end_id = ").concat("'")
+                .concat(idFA).concat("'");
+        try (Connection connection = ConnectionPoolProvider.getConnection()) {
+
+            ResultSet resultSet = connection.createStatement().executeQuery(SELECT_BY_START_AIRPORT_ID_AND_FINISH_AIRPORT_ID);
+
+            List<Flight> entities = new ArrayList<>();
+
+            while  (resultSet.next()) {
+
+                entities.add(rm.toObject(resultSet));
+            }
+
+            return entities;
+
+        } catch (SQLException e) {
+            LOGGER.error("Something went wrong during Flight retrieval by idStartAirport=" + idStartAirport+", idFinishAirport="+ idFinishAirport, e);
+            throw new EntityNotFoundException(e);
+        }
+    }
+
 }

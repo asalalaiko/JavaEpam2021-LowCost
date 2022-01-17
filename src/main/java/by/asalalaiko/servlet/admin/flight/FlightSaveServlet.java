@@ -42,10 +42,7 @@ public class FlightSaveServlet extends HttpServlet {
             for (int i=0; i<flight.getPlane().getSeats(); i++){
                 TicketService.getInstance().create("", Boolean.FALSE, Boolean.FALSE, flight, user, TicketStatus.FREE);
             }
-
-
-
-            req.setAttribute("createdFlight", flight);
+         req.setAttribute("createdFlight", flight);
 
         } else {
             Flight flight = FlightService.getInstance().update(Long.valueOf(id), start, finish, km, startAirport, finishAirport, plane, cost, costBaggage, costPriority);

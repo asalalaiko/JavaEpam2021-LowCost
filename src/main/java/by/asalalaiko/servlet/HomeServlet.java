@@ -33,7 +33,16 @@ public class HomeServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try {
-            Collection<Flight> flights = FlightService.findAll();
+            String startCity = req.getParameter("startCity");
+            String finishCity = req.getParameter("finishCity");
+
+            if (startCity == null) startCity="city_id";
+            if (finishCity == null) finishCity="city_id";
+
+
+            Collection<Flight> flights = FlightService.findByCities(startCity, finishCity);
+
+
             req.setAttribute("flights", flights);
 
             Collection<City> cities = CityService.findAll();

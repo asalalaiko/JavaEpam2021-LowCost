@@ -3,13 +3,16 @@ package by.asalalaiko.service;
 import by.asalalaiko.domain.Airport;
 import by.asalalaiko.domain.Flight;
 import by.asalalaiko.domain.Plane;
+import by.asalalaiko.repo.AirportRepo;
 import by.asalalaiko.repo.FlightRepo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class FlightService {
 
@@ -30,6 +33,20 @@ public class FlightService {
     }
 
     public static Collection<Flight> findAll() {return FlightRepo.getInstance().findAll();    }
+
+
+    public static Collection<Flight> findByCities(String startCityID, String finishCityID) {
+
+        List<Airport> airportsStart = AirportRepo.getInstance().getByCityId(startCityID);
+        List<Airport> airportsFinish = AirportRepo.getInstance().getByCityId(finishCityID);
+        List<Flight> flights = new ArrayList<>();
+
+        airportsStart.stream().forEach(s -> airportsFinish.stream().forEach(f  -> {
+             flights.addAll(FlightRepo.getInstance().findByAirports(s.getId(), f.getId()));
+        }));
+
+    return flights;
+    }
 
     public static Flight findById(Long id) {return FlightRepo.getInstance().getById(id);    }
 
