@@ -13,7 +13,10 @@
     <div class="container border-5" >
 
 
-       You payed ${flight}
+       You payed <BR>
+        ${flight.startAirport.city.name} - ${flight.finishAirport.city.name} - ${quantity}ticket(s)<br>
+        Summa: ${sum} $
+
 
 
     </div>

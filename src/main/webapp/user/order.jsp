@@ -25,11 +25,11 @@
                     </div>
                     <div class="col-md-12 ">
                         <input type="checkbox" id="baggage" name="baggage" value="${baggage}">
-                        <label for="baggage"> Add baggage(* $)</label><br>
+                        <label for="baggage"> Add baggage(${baggageCost} $)</label><br>
                     </div>
                     <div class="col-md-12 ">
                         <input type="checkbox" id="priority" name="priority" value="${priority}">
-                        <label for="priority"> Priority registration (* $)</label><br>
+                        <label for="priority"> Priority registration (${priorityCost} $)</label><br>
                     </div>
 
 

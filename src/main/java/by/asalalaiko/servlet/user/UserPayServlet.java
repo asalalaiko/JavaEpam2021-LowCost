@@ -34,13 +34,17 @@ public class UserPayServlet extends HttpServlet {
         boolean priority = req.getParameter("priority")!= null;
         TicketStatus status = TicketStatus.FREE;
         Flight flight = FlightService.findById(flightId);
-        BigDecimal sum = BigDecimal.valueOf(0.00);
+        BigDecimal sum = BigDecimal.ZERO;
         User user = (User) req.getSession().getAttribute("user");
 
 
         try {
 
             List<Ticket> freeTickets = (List<Ticket>) TicketService.findByFlightIdAndStatus(flightId, status);
+
+            sum = sum.add(flight.getCost().multiply(new BigDecimal(quantity)));
+            if(baggage) sum = sum.add(flight.getCostBaggage().multiply(new BigDecimal(quantity)));
+            if(baggage) sum = sum.add(flight.getCostPriority().multiply(new BigDecimal(quantity)));
 
             if (freeTickets.size() >= quantity) {
                 freeTickets.stream().limit(quantity).forEach(t -> {
@@ -50,6 +54,8 @@ public class UserPayServlet extends HttpServlet {
 
 
             req.setAttribute("flight", flight);
+            req.setAttribute("quantity", quantity);
+            req.setAttribute("sum", sum);
             req.getRequestDispatcher("/user/pay.jsp").forward(req, resp);
         } catch (Exception e) {
             throw new IOException(e);

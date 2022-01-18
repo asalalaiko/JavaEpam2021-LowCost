@@ -40,10 +40,14 @@ public class UserOrderTicketServlet extends HttpServlet {
                 req.setAttribute("message", message);
                 req.setAttribute("quantity", quantity);
                 req.setAttribute("flight", flight);
+                req.setAttribute("baggageCost", flight.getCostBaggage());
+                req.setAttribute("priorityCost", flight.getCostPriority());
+
                 HashSet<Long> flights  =(HashSet<Long>) req.getSession().getAttribute("cartFlights");
                 if( flights != null) {
                     flights.removeIf(k -> k.equals(flightId));
                     req.getSession().setAttribute("cartFlights", flights);
+
                 }
             }
             else {
