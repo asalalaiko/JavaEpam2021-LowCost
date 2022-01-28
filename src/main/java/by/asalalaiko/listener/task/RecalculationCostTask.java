@@ -16,13 +16,13 @@ public class RecalculationCostTask extends TimerTask {
     @Override
     public void run() {
         try {
-            LOGGER.info("RecalculationCostTask started.");
+            LOGGER.info("RecalculationCostTask run.");
 
             List<Flight> flights = (List<Flight>) FlightService.findAll();
 
             if (flights.size() > 0) {
                 flights.stream().forEach(t -> {
-                    FlightService.getInstance().updateToCost(t.getId(), BigDecimal.valueOf(t.getCost().doubleValue()*1.1));
+                    FlightService.getInstance().updateToCost(t.getId(), t.getCost().multiply(new BigDecimal(1.10)));
                 });
             }
 

@@ -19,11 +19,9 @@
             <AppenderRef ref="console"/>
             <AppenderRef ref="file"/>
         </Root>
-        <Logger name="org.springframework.web.client" level="DEBUG" additivity="false">
-            <AppenderRef ref="APP" level="DEBUG"/>
-        </Logger>
-        <Logger name="org.apache.http.wire" level="DEBUG" additivity="false">
+               <Logger name="org.apache.http.wire" level="DEBUG" additivity="false">
             <AppenderRef ref="APP" level="DEBUG"/>
         </Logger>
     </Loggers>
 </Configuration>
+
